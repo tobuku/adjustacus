@@ -1,1 +1,1190 @@
-.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adjustacus — AI Property Documentation</title>
+  <meta name="description" content="Photograph any room. Adjustacus AI itemizes every item, estimates replacement costs, and generates professional reports for insurance claims and property inventory.">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <style>
+    /* ===== VARIABLES ===== */
+    :root {
+      --navy-deep:    #080E1A;
+      --navy:         #0B1220;
+      --navy-mid:     #0F1A2E;
+      --navy-surface: #152039;
+      --navy-card:    #1A2845;
+      --navy-border:  #243558;
+      --blue:         #0EA5E9;
+      --blue-dim:     #0284C7;
+      --blue-glow:    rgba(14,165,233,0.12);
+      --gold:         #F59E0B;
+      --gold-dim:     #D97706;
+      --text-primary: #EFF6FF;
+      --text-mid:     #B8CEEB;
+      --text-muted:   #6A85A8;
+      --text-dim:     #3D566E;
+    }
+
+    /* ===== RESET ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--navy-deep);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ===== GRID TEXTURE ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(14,165,233,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(14,165,233,0.035) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.35s, border-color 0.35s;
+    }
+    nav.scrolled {
+      background: rgba(8,14,26,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--navy-border);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .nav-logo img {
+      height: 38px;
+      width: auto;
+    }
+    .nav-logo-text {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+    }
+    .nav-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(245,158,11,0.1);
+      border: 1px solid rgba(245,158,11,0.28);
+      color: var(--gold);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 0.38rem 0.85rem;
+      border-radius: 2rem;
+    }
+    .nav-badge-dot {
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse-dot 2.2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulse-dot {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.45; transform: scale(0.75); }
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 2rem 5rem;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-orb-1 {
+      top: -180px; right: -180px;
+      width: 650px; height: 650px;
+      background: radial-gradient(circle, rgba(14,165,233,0.13) 0%, transparent 68%);
+    }
+    .hero-orb-2 {
+      bottom: -120px; left: -80px;
+      width: 480px; height: 480px;
+      background: radial-gradient(circle, rgba(245,158,11,0.07) 0%, transparent 70%);
+    }
+    .hero-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 1.4rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 22px; height: 1px;
+      background: var(--blue);
+    }
+    h1 {
+      font-size: clamp(2.6rem, 5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+    }
+    h1 em {
+      font-style: normal;
+      color: var(--blue);
+    }
+    .hero-sub {
+      font-size: 1.075rem;
+      color: var(--text-mid);
+      line-height: 1.72;
+      margin-bottom: 2.5rem;
+      max-width: 460px;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: var(--blue);
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.82rem 1.65rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+    .btn-primary:hover {
+      background: var(--blue-dim);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(14,165,233,0.32);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.82rem 1.5rem;
+      border-radius: 0.5rem;
+      border: 1px solid var(--navy-border);
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s, transform 0.2s;
+      font-family: inherit;
+    }
+    .btn-secondary:hover {
+      color: var(--text-primary);
+      border-color: rgba(14,165,233,0.5);
+      transform: translateY(-2px);
+    }
+
+    /* ===== PHONE MOCKUP ===== */
+    .phone-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .phone-frame {
+      width: 255px;
+      height: 510px;
+      background: var(--navy-surface);
+      border-radius: 42px;
+      border: 2px solid var(--navy-border);
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(14,165,233,0.08),
+        0 40px 90px rgba(0,0,0,0.65),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+    .phone-notch {
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 78px; height: 20px;
+      background: var(--navy-deep);
+      border-radius: 10px;
+      z-index: 10;
+    }
+    .phone-room {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      grid-template-rows: repeat(5,1fr);
+      gap: 5px;
+      padding: 48px 10px 52px;
+    }
+    .room-item {
+      background: rgba(14,165,233,0.04);
+      border: 1px solid transparent;
+      border-radius: 7px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      opacity: 0;
+      transform: scale(0.88);
+      transition: background 0.3s, border-color 0.3s, opacity 0.4s, transform 0.4s;
+    }
+    .room-item.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .room-item.tagged {
+      background: rgba(14,165,233,0.14);
+      border-color: rgba(14,165,233,0.38);
+    }
+    .room-item-label {
+      font-size: 0.48rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--blue);
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.3s 0.2s;
+    }
+    .room-item.tagged .room-item-label { opacity: 1; }
+    .room-item-icon {
+      width: 18px; height: 18px;
+      opacity: 0.25;
+      transition: opacity 0.3s;
+    }
+    .room-item.tagged .room-item-icon { opacity: 0.7; }
+    .scan-line {
+      position: absolute;
+      left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent 0%, var(--blue) 50%, transparent 100%);
+      box-shadow: 0 0 10px rgba(14,165,233,0.6), 0 0 22px rgba(14,165,233,0.25);
+      top: 0;
+      animation: scan 3.2s ease-in-out infinite;
+      z-index: 6;
+    }
+    @keyframes scan {
+      0%   { top: 0%;   opacity: 0; }
+      6%   { opacity: 1; }
+      92%  { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+    .phone-footer {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(8,14,26,0.96);
+      border-top: 1px solid var(--navy-border);
+      padding: 9px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 7;
+    }
+    .phone-footer-label {
+      font-size: 0.56rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+    }
+    .phone-footer-total {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    /* ambient ring */
+    .phone-ring {
+      position: absolute;
+      inset: -30px;
+      border-radius: 50px;
+      border: 1px solid rgba(14,165,233,0.07);
+      pointer-events: none;
+    }
+    .phone-ring-2 {
+      inset: -55px;
+      border-color: rgba(14,165,233,0.04);
+    }
+
+    /* ===== STATS ===== */
+    .stats-bar {
+      position: relative; z-index: 1;
+      background: var(--navy-surface);
+      border-top: 1px solid var(--navy-border);
+      border-bottom: 1px solid var(--navy-border);
+    }
+    .stats-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      padding: 0 2rem;
+    }
+    .stat-item {
+      padding: 2.25rem 2rem;
+      text-align: center;
+      border-right: 1px solid var(--navy-border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-number {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .stat-number em { font-style: normal; color: var(--blue); }
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* ===== SECTION BASE ===== */
+    section { position: relative; z-index: 1; }
+    .section-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 5.5rem 2rem;
+    }
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.8rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 18px; height: 1px;
+      background: var(--blue);
+    }
+    h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.7rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.12;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+    h2 em { font-style: normal; color: var(--blue); }
+    .section-sub {
+      font-size: 1.025rem;
+      color: var(--text-mid);
+      line-height: 1.72;
+      max-width: 540px;
+      margin-bottom: 3rem;
+    }
+
+    /* ===== PROBLEM ===== */
+    .problem {
+      background: linear-gradient(180deg, var(--navy-deep) 0%, var(--navy-mid) 100%);
+      border-top: 1px solid var(--navy-border);
+    }
+    .problem-inner {
+      max-width: 840px;
+      margin: 0 auto;
+      padding: 5.5rem 2rem;
+      text-align: left;
+    }
+    .problem-quote {
+      font-size: clamp(1.15rem, 2.2vw, 1.55rem);
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--text-mid);
+      border-left: 3px solid var(--blue);
+      padding-left: 2rem;
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+    .problem-quote strong {
+      font-style: normal;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .problem-callout {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+    .problem-callout::after {
+      content: '';
+      display: block;
+      width: 28px; height: 1px;
+      background: var(--blue);
+    }
+
+    /* ===== FEATURES ===== */
+    .features { background: var(--navy-mid); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+      gap: 1.25rem;
+    }
+    .feature-card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 1rem;
+      padding: 2rem 1.75rem 2.25rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blue), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .feature-card:hover {
+      border-color: rgba(14,165,233,0.38);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+    }
+    .feature-card:hover::before { opacity: 1; }
+    .feature-icon {
+      width: 46px; height: 46px;
+      background: var(--blue-glow);
+      border: 1px solid rgba(14,165,233,0.18);
+      border-radius: 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .feature-icon svg { width: 21px; height: 21px; color: var(--blue); }
+    .feature-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.7rem;
+      color: var(--text-primary);
+    }
+    .feature-card p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.68;
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .how { background: var(--navy-deep); }
+    .how-steps {
+      display: grid;
+      grid-template-columns: 1fr 80px 1fr 80px 1fr;
+      gap: 0;
+      align-items: start;
+    }
+    .step-connector {
+      display: flex;
+      align-items: flex-start;
+      padding-top: 26px;
+    }
+    .connector-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--navy-border) 0%, var(--blue) 50%, var(--navy-border) 100%);
+    }
+    .connector-arrow {
+      width: 0;
+      height: 0;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-left: 7px solid var(--blue);
+      margin-left: -1px;
+    }
+    .step { text-align: center; padding: 0 0.5rem; }
+    .step-num {
+      width: 52px; height: 52px;
+      background: var(--navy-surface);
+      border: 1px solid var(--navy-border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--blue);
+      margin: 0 auto 1.5rem;
+      position: relative;
+    }
+    .step-num::after {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      border: 1px dashed rgba(14,165,233,0.2);
+    }
+    .step h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      color: var(--text-primary);
+    }
+    .step p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ===== WHO IT'S FOR ===== */
+    .who { background: var(--navy-mid); }
+    .who-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+    .who-card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 1rem;
+      padding: 2rem 1.75rem 2.25rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .who-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--blue), rgba(14,165,233,0.1));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .who-card:hover { border-color: rgba(14,165,233,0.3); transform: translateY(-3px); }
+    .who-card:hover::after { opacity: 1; }
+    .who-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue);
+      background: var(--blue-glow);
+      border: 1px solid rgba(14,165,233,0.14);
+      padding: 0.22rem 0.6rem;
+      border-radius: 0.25rem;
+      margin-bottom: 1.2rem;
+    }
+    .who-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.85rem;
+      color: var(--text-primary);
+      line-height: 1.25;
+    }
+    .who-card > p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .who-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .who-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+      font-size: 0.835rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+    .who-list li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 14px; height: 14px;
+      margin-top: 1px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M2 7.5l3 3L12 3.5' stroke='%230EA5E9' stroke-width='1.75' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    /* ===== CTA ===== */
+    .cta-section {
+      background: var(--navy-deep);
+      border-top: 1px solid var(--navy-border);
+      border-bottom: 1px solid var(--navy-border);
+    }
+    .cta-inner {
+      max-width: 620px;
+      margin: 0 auto;
+      padding: 5.5rem 2rem;
+      text-align: center;
+    }
+    .cta-inner .section-label {
+      justify-content: center;
+    }
+    .cta-inner .section-label::before { display: none; }
+    .cta-inner h2 { margin-bottom: 1rem; }
+    .cta-inner .section-sub {
+      margin: 0 auto 2.5rem;
+      max-width: 100%;
+    }
+    .email-form {
+      display: flex;
+      gap: 0.7rem;
+      max-width: 430px;
+      margin: 0 auto;
+    }
+    .email-input {
+      flex: 1;
+      background: var(--navy-surface);
+      border: 1px solid var(--navy-border);
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      padding: 0.82rem 1.15rem;
+      border-radius: 0.5rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      font-family: inherit;
+    }
+    .email-input::placeholder { color: var(--text-dim); }
+    .email-input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(14,165,233,0.1);
+    }
+    .form-note {
+      margin-top: 0.9rem;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      transition: color 0.3s;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      position: relative; z-index: 1;
+      background: var(--navy-deep);
+      padding: 2rem;
+    }
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .footer-brand img {
+      height: 26px; width: auto;
+      opacity: 0.65;
+    }
+    .footer-brand-name {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .how-steps {
+        grid-template-columns: 1fr;
+        gap: 2.25rem;
+      }
+      .step-connector { display: none; }
+      .step {
+        text-align: left;
+        display: grid;
+        grid-template-columns: 52px 1fr;
+        column-gap: 1.25rem;
+        align-items: start;
+      }
+      .step-num { margin: 0; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-logo-text { display: none; }
+
+      .hero { padding: 6rem 1.25rem 3.5rem; }
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: center;
+      }
+      .hero-eyebrow { justify-content: center; }
+      .hero-sub { max-width: 100%; }
+      .hero-cta { justify-content: center; }
+      .phone-wrap { order: -1; }
+
+      .stats-inner { grid-template-columns: 1fr; }
+      .stat-item {
+        border-right: none;
+        border-bottom: 1px solid var(--navy-border);
+      }
+      .stat-item:last-child { border-bottom: none; }
+
+      .email-form { flex-direction: column; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    @media (max-width: 480px) {
+      .phone-frame { width: 220px; height: 440px; }
+      h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="mainNav">
+    <div class="nav-logo">
+      <img src="logo.png" alt="Adjustacus" onerror="this.style.display='none'">
+      <span class="nav-logo-text">Adjustacus</span>
+    </div>
+    <div class="nav-badge">
+      <span class="nav-badge-dot"></span>
+      Coming to the App Store
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-inner">
+
+      <div class="hero-content">
+        <div class="hero-eyebrow">AI-Powered Property Documentation</div>
+        <h1>Photograph it.<br><em>Itemize it.</em><br>Prove it.</h1>
+        <p class="hero-sub">
+          Adjustacus turns a single photo into a complete property inventory — every item identified, every replacement cost estimated, and a professional report ready to export or email in seconds.
+        </p>
+        <div class="hero-cta">
+          <a href="#" class="btn-primary">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 18.5a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13Z"/>
+              <path d="M12 22v-3.5"/>
+              <path d="M12 2v3.5"/>
+              <path d="m4.22 4.22 2.47 2.47"/>
+              <path d="m17.31 17.31 2.47 2.47"/>
+              <path d="M2 12h3.5"/>
+              <path d="M18.5 12H22"/>
+              <path d="m4.22 19.78 2.47-2.47"/>
+              <path d="m17.31 6.69 2.47-2.47"/>
+            </svg>
+            Download on App Store
+          </a>
+          <a href="#how" class="btn-secondary">
+            See How It Works
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone-ring phone-ring-2"></div>
+        <div class="phone-ring"></div>
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-room" id="phoneGrid"></div>
+          <div class="scan-line"></div>
+          <div class="phone-footer">
+            <span class="phone-footer-label">Estimated Total</span>
+            <span class="phone-footer-total" id="totalValue">$0</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item reveal">
+        <div class="stat-number">3<em>s</em></div>
+        <div class="stat-label">Average scan to itemized list</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-1">
+        <div class="stat-number">200<em>+</em></div>
+        <div class="stat-label">Item categories recognized</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-2">
+        <div class="stat-number">PDF <em>&amp;</em> CSV</div>
+        <div class="stat-label">Professional export formats</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROBLEM -->
+  <section class="problem">
+    <div class="problem-inner">
+      <p class="problem-quote reveal">
+        "When a loss happens, <strong>the burden of proof falls on you.</strong> Most people walk room to room with a notepad and a phone camera — guessing at values, forgetting items, scrambling for receipts. That approach costs time, money, and in claims disputes, it can cost you everything."
+      </p>
+      <div class="problem-callout reveal">There is a better way now</div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="section-inner">
+      <div class="section-label reveal">What It Does</div>
+      <h2 class="reveal">Everything you need.<br><em>Built into one shot.</em></h2>
+      <p class="section-sub reveal">One photo from your phone feeds a complete workflow — from raw image to professional documentation ready for any use.</p>
+      <div class="features-grid">
+
+        <div class="feature-card reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9a2 2 0 0 1 2-2h.93a2 2 0 0 0 1.664-.89l.812-1.22A2 2 0 0 1 10.07 4h3.86a2 2 0 0 1 1.664.89l.812 1.22A2 2 0 0 0 18.07 7H19a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <circle cx="12" cy="13" r="3"/>
+            </svg>
+          </div>
+          <h3>Instant AI Itemization</h3>
+          <p>Point your camera at any room or space. Adjustacus identifies and catalogs every visible item — furniture, electronics, appliances, fixtures — without manual input.</p>
+        </div>
+
+        <div class="feature-card reveal reveal-delay-1">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23"/>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </div>
+          <h3>Real-Time Cost Estimation</h3>
+          <p>Each identified item is paired with a current market replacement value — defensible, accurate estimates you can present with confidence to any carrier or adjuster.</p>
+        </div>
+
+        <div class="feature-card reveal reveal-delay-2">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14,2 14,8 20,8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10,9 9,9 8,9"/>
+            </svg>
+          </div>
+          <h3>PDF &amp; CSV Export</h3>
+          <p>Generate a clean, formatted PDF report or structured CSV spreadsheet in a single tap — ready for insurance submission, legal documentation, or personal records.</p>
+        </div>
+
+        <div class="feature-card reveal reveal-delay-3">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </div>
+          <h3>Email Directly From the App</h3>
+          <p>Send your completed report to yourself, your insurance carrier, your attorney, or your client without leaving the app. No file transfers, no friction.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="section-inner">
+      <div class="section-label reveal">The Process</div>
+      <h2 class="reveal">Three steps.<br><em>From photo to report.</em></h2>
+      <p class="section-sub reveal">Designed to be used in the field, under pressure, by anyone — no training required.</p>
+      <div class="how-steps reveal">
+
+        <div class="step">
+          <div class="step-num">01</div>
+          <div>
+            <h3>Take a Photo</h3>
+            <p>Open the app, point at any room or area, and capture. No special setup or lighting requirements.</p>
+          </div>
+        </div>
+
+        <div class="step-connector">
+          <div class="connector-line"></div>
+          <div class="connector-arrow"></div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">02</div>
+          <div>
+            <h3>AI Itemizes Everything</h3>
+            <p>The Adjustacus engine scans the image, identifies every visible item, pulls replacement cost data, and builds your list automatically.</p>
+          </div>
+        </div>
+
+        <div class="step-connector">
+          <div class="connector-line"></div>
+          <div class="connector-arrow"></div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">03</div>
+          <div>
+            <h3>Export Your Report</h3>
+            <p>Review, edit if needed, then export as PDF or CSV — or email it on the spot. Your documentation is ready in seconds.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO IT'S FOR -->
+  <section class="who" id="who">
+    <div class="section-inner">
+      <div class="section-label reveal">Built For</div>
+      <h2 class="reveal">Who uses <em>Adjustacus</em></h2>
+      <p class="section-sub reveal">Whether you're protecting your own home or doing this professionally, Adjustacus delivers the documentation you need.</p>
+      <div class="who-grid">
+
+        <div class="who-card reveal">
+          <div class="who-tag">Homeowners</div>
+          <h3>Know What You Own and What It's Worth</h3>
+          <p>Most homeowners discover they're underinsured only after a loss. Document your home's contents before anything happens — so you're prepared, not scrambling.</p>
+          <ul class="who-list">
+            <li>Pre-loss inventory documentation</li>
+            <li>Accurate replacement value on record</li>
+            <li>Stored reports ready for future claims</li>
+            <li>Peace of mind before disaster strikes</li>
+          </ul>
+        </div>
+
+        <div class="who-card reveal reveal-delay-1">
+          <div class="who-tag">Insurance Adjusters</div>
+          <h3>Close Claims Faster With Better Data</h3>
+          <p>Traditional field documentation is time-consuming and inconsistent. Adjustacus accelerates the contents assessment process so you can handle more claims with greater accuracy.</p>
+          <ul class="who-list">
+            <li>On-site itemization in minutes</li>
+            <li>Standardized, auditable reports</li>
+            <li>Less manual documentation time per claim</li>
+            <li>Defensible cost estimates per item</li>
+          </ul>
+        </div>
+
+        <div class="who-card reveal reveal-delay-2">
+          <div class="who-tag">Public Adjusters</div>
+          <h3>Build Stronger Claims for Your Clients</h3>
+          <p>Your clients are counting on you to maximize their recovery. Give them a thorough, systematic inventory that leaves nothing on the table and nothing out of the report.</p>
+          <ul class="who-list">
+            <li>Comprehensive contents documentation</li>
+            <li>Professional client-ready deliverables</li>
+            <li>Faster turnaround on claim packages</li>
+            <li>Competitive edge in complex claims</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / EMAIL CAPTURE -->
+  <section class="cta-section" id="notify">
+    <div class="cta-inner">
+      <div class="section-label reveal">Early Access</div>
+      <h2 class="reveal">Be first to know<br>when we launch.</h2>
+      <p class="section-sub reveal">Adjustacus is coming to the App Store. Enter your email and we'll notify you the moment it's available.</p>
+      <form class="email-form reveal" onsubmit="handleSubmit(event)" novalidate>
+        <input
+          type="email"
+          class="email-input"
+          placeholder="your@email.com"
+          required
+          autocomplete="email"
+          id="emailInput"
+        >
+        <button type="submit" class="btn-primary">Notify Me</button>
+      </form>
+      <p class="form-note" id="formNote">Your information is never shared or sold.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="logo.png" alt="Adjustacus" onerror="this.style.display='none'">
+        <span class="footer-brand-name">Adjustacus</span>
+      </div>
+      <div class="footer-copy">&copy; 2026 Adjustacus. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Nav scroll state
+    const mainNav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      mainNav.classList.toggle('scrolled', window.scrollY > 48);
+    }, { passive: true });
+
+    // Phone mockup animation
+    const roomItems = [
+      { label: 'Sofa',      val: 1200 },
+      { label: 'TV',        val: 850  },
+      { label: 'Table',     val: 440  },
+      { label: 'Chair',     val: 320  },
+      { label: 'Lamp',      val: 95   },
+      { label: 'Cabinet',   val: 680  },
+      { label: 'Rug',       val: 375  },
+      { label: 'Blinds',    val: 215  },
+      { label: 'Art',       val: 150  },
+      { label: 'Clock',     val: 75   },
+      { label: 'Plant',     val: 45   },
+      { label: 'Shelf',     val: 290  },
+    ];
+
+    const phoneGrid  = document.getElementById('phoneGrid');
+    const totalEl    = document.getElementById('totalValue');
+    let runningTotal = 0;
+
+    // Build grid cells
+    roomItems.forEach((item) => {
+      const cell = document.createElement('div');
+      cell.className = 'room-item';
+      cell.innerHTML = `
+        <svg class="room-item-icon" viewBox="0 0 20 20" fill="none" stroke="rgba(14,165,233,0.6)" stroke-width="1.5">
+          <rect x="3" y="3" width="14" height="14" rx="2.5"/>
+          <line x1="7" y1="10" x2="13" y2="10"/>
+          <line x1="10" y1="7" x2="10" y2="13"/>
+        </svg>
+        <span class="room-item-label">${item.label}</span>
+      `;
+      phoneGrid.appendChild(cell);
+    });
+
+    const cells = phoneGrid.querySelectorAll('.room-item');
+
+    // Stagger reveal + tag animations
+    cells.forEach((cell, i) => {
+      setTimeout(() => {
+        cell.classList.add('visible');
+        setTimeout(() => {
+          cell.classList.add('tagged');
+          runningTotal += roomItems[i].val;
+          countUp(totalEl, runningTotal - roomItems[i].val, runningTotal, 300);
+        }, 250);
+      }, 400 + i * 320);
+    });
+
+    function countUp(el, from, to, duration) {
+      const start = performance.now();
+      function step(now) {
+        const t = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = '$' + Math.round(from + (to - from) * eased).toLocaleString();
+        if (t < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // Email form
+    function handleSubmit(e) {
+      e.preventDefault();
+      const note  = document.getElementById('formNote');
+      const input = document.getElementById('emailInput');
+      note.textContent = "You're on the list. We'll be in touch.";
+      note.style.color = 'var(--blue)';
+      input.value = '';
+      input.blur();
+    }
+  </script>
+
+</body>
+</html>
