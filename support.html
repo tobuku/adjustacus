@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support — Adjustacus</title>
+  <meta name="description" content="Get help with Adjustacus. Find answers to common questions about AI property documentation, reports, and your account.">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <style>
+    /* ===== VARIABLES ===== */
+    :root {
+      --navy-deep:    #080E1A;
+      --navy:         #0B1220;
+      --navy-mid:     #0F1A2E;
+      --navy-surface: #152039;
+      --navy-card:    #1A2845;
+      --navy-border:  #243558;
+      --blue:         #0EA5E9;
+      --blue-dim:     #0284C7;
+      --blue-glow:    rgba(14,165,233,0.12);
+      --gold:         #F59E0B;
+      --gold-dim:     #D97706;
+      --text-primary: #EFF6FF;
+      --text-mid:     #B8CEEB;
+      --text-muted:   #6A85A8;
+      --text-dim:     #3D566E;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--navy-deep);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ===== GRID TEXTURE ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(14,165,233,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(14,165,233,0.035) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(8,14,26,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--navy-border);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .nav-logo img {
+      height: 38px;
+      width: auto;
+    }
+    .nav-logo-text {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+    }
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--blue); }
+    .nav-back svg { width: 15px; height: 15px; }
+
+    /* ===== PAGE HEADER ===== */
+    .page-header {
+      position: relative;
+      z-index: 1;
+      padding: 9rem 2rem 4rem;
+      text-align: center;
+      overflow: hidden;
+    }
+    .page-header-orb {
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse, rgba(14,165,233,0.1) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .page-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 1.2rem;
+    }
+    .page-eyebrow::before {
+      content: '';
+      display: block;
+      width: 22px; height: 1px;
+      background: var(--blue);
+    }
+    .page-eyebrow::after {
+      content: '';
+      display: block;
+      width: 22px; height: 1px;
+      background: var(--blue);
+    }
+    .page-header h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .page-header h1 em { font-style: normal; color: var(--blue); }
+    .page-header p {
+      font-size: 1.05rem;
+      color: var(--text-mid);
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ===== CONTENT WRAPPER ===== */
+    .content {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+
+    /* ===== SECTION LABEL ===== */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 1.25rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 18px; height: 1px;
+      background: var(--blue);
+    }
+
+    /* ===== FAQ ===== */
+    .faq-block {
+      margin-bottom: 3.5rem;
+    }
+    .faq-block h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 1.25rem;
+    }
+    .faq-item {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 0.85rem;
+      margin-bottom: 0.6rem;
+      overflow: hidden;
+      transition: border-color 0.25s;
+    }
+    .faq-item:hover {
+      border-color: rgba(14,165,233,0.3);
+    }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 0.975rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.45;
+      transition: color 0.2s;
+    }
+    .faq-question:hover { color: var(--blue); }
+    .faq-icon {
+      flex-shrink: 0;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--blue-glow);
+      border: 1px solid rgba(14,165,233,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s, background 0.2s;
+    }
+    .faq-icon svg {
+      width: 10px; height: 10px;
+      stroke: var(--blue);
+      transition: transform 0.3s;
+    }
+    .faq-item.open .faq-icon { background: var(--blue); transform: rotate(180deg); }
+    .faq-item.open .faq-icon svg { stroke: #fff; }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.2s;
+    }
+    .faq-item.open .faq-answer {
+      max-height: 400px;
+    }
+    .faq-answer-inner {
+      padding: 0 1.5rem 1.35rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+    .faq-answer-inner a {
+      color: var(--blue);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* ===== CONTACT CARD ===== */
+    .contact-card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 1rem;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blue), transparent);
+      opacity: 0.5;
+    }
+    .contact-icon {
+      width: 52px; height: 52px;
+      background: var(--blue-glow);
+      border: 1px solid rgba(14,165,233,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+    }
+    .contact-icon svg { width: 22px; height: 22px; stroke: var(--blue); }
+    .contact-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    .contact-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.65;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: var(--blue);
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.82rem 1.65rem;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      font-family: inherit;
+    }
+    .btn-primary:hover {
+      background: var(--blue-dim);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(14,165,233,0.32);
+    }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--navy-border);
+      margin: 3rem 0;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      position: relative; z-index: 1;
+      background: var(--navy-deep);
+      border-top: 1px solid var(--navy-border);
+      padding: 2rem;
+    }
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .footer-brand img {
+      height: 26px; width: auto;
+      opacity: 0.65;
+    }
+    .footer-brand-name {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .footer-links a {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text-muted); }
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    /* ===== REVEAL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-logo-text { display: none; }
+      .page-header { padding: 7rem 1.25rem 3rem; }
+      .content { padding: 0 1.25rem 4rem; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <img src="adjustacus-logo.jpg" alt="Adjustacus" onerror="this.style.display='none'">
+      <span class="nav-logo-text">Adjustacus</span>
+    </a>
+    <a href="/" class="nav-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 18-6-6 6-6"/>
+      </svg>
+      Back to Home
+    </a>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-header-orb"></div>
+    <div class="page-eyebrow">Help Center</div>
+    <h1>Adjustacus <em>Support</em></h1>
+    <p>Answers to common questions about the app, your reports, and how Adjustacus works.</p>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- USING THE APP -->
+    <div class="faq-block reveal">
+      <div class="section-label">Using the App</div>
+      <h2>Getting Started</h2>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          How do I take a photo with Adjustacus?
+          <span class="faq-icon"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5l3 3 3-3"/></svg></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">Open the app and tap the camera button on the main screen. Point your phone at any room or area — a living room, kitchen, office, or storage space — and tap to capture. There are no special lighting or positioning requirements. For best results, take the photo from a position where most items in the room are visible.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          What kinds of items can Adjustacus identify?
+          <span class="faq-icon"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5l3 3 3-3"/></svg></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">Adjustacus recognizes over 200 item categories including furniture, electronics, appliances, lighting fixtures, window treatments, artwork, rugs, and more. The AI is trained on household and commercial contents typical to insurance and property documentation. Items that are partially obscured or very small may not always be detected.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          Can I scan multiple rooms in one report?
+          <span class="faq-icon"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5l3 3 3-3"/></svg></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">Yes. You can add multiple photos to a single report — each photo is processed separately and the results are combined into one consolidated inventory and cost summary. This lets you document an entire home or property in one organized report.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          Can I edit or correct items after the scan?
+          <span class="faq-icon"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5l3 3 3-3"/></svg></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">Yes. After each scan you can review the generated item list, rename items, adjust quantities, correct replacement values, and remove anything that was incorrectly identified. You have full control over the final inventory before exporting your report.</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- REPORTS & EXPORTS -->
+    <div class="faq-block reveal">
+      <div class="section-label">Reports &amp; Exports</div>
+      <h2>Your Documentation</h2>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          What formats can I export my report in?
+          <span class="faq-icon"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5l3 3 3-3"/></svg></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">Adjustacus exports reports as PDF or CSV. The PDF is a formatted, professional document suitable for submission to insurance carriers, legal proceedings, or personal records. The CSV is a structured spreadsheet you can open in Excel, Google Sheets, or any claims management software.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          How do I send my report to my insurance company?
+          <span class="faq-icon"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5l3 3 3-3"/></svg></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">Tap the share button on any completed report and choose Email. You can enter your carrier's claims email address directly. The report attaches automatically. You can also save the file to your device and attach it manually to any email, portal upload, or document submission system.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          Where are my saved reports stored?
+          <span class="faq-icon"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5l3 3 3-3"/></svg></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">Reports are saved locally on your device and accessible from the Reports tab in the app. You can also export them to iCloud Drive, Files, or any storage service connected to your iPhone to keep a backup.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          How accurate are the replacement cost estimates?
+          <span class="faq-icon"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5l3 3 3-3"/></svg></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">Replacement values are based on current market pricing data and are designed to be defensible starting points for insurance documentation. Values reflect typical retail replacement cost, not original purchase price or depreciated value. You can adjust any estimate to reflect a specific item's brand, model, or condition before exporting.</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- PRIVACY -->
+    <div class="faq-block reveal">
+      <div class="section-label">Privacy &amp; Data</div>
+      <h2>Your Information</h2>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          Are my photos stored on your servers?
+          <span class="faq-icon"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5l3 3 3-3"/></svg></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">Photos are transmitted to our processing servers only for the duration of the AI scan. Once the itemization is complete, the image is not retained on our servers. Your original photos remain on your device and are not shared with any third parties.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          Is my personal information shared or sold?
+          <span class="faq-icon"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5l3 3 3-3"/></svg></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">No. Your personal information is never sold or shared with advertisers, insurance companies, or other third parties. We collect only what is necessary to operate the app and improve accuracy. See our privacy policy for full details.</div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false">
+          Can I delete my account and data?
+          <span class="faq-icon"><svg viewBox="0 0 10 10" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3.5l3 3 3-3"/></svg></span>
+        </button>
+        <div class="faq-answer" role="region">
+          <div class="faq-answer-inner">Yes. You can request deletion of your account and any associated data at any time by contacting us at <a href="mailto:info@knowleapstrategies.com">info@knowleapstrategies.com</a>. We will process your request within 30 days in accordance with applicable privacy laws.</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- CONTACT -->
+    <div class="reveal reveal-delay-1">
+      <div class="section-label">Contact</div>
+      <div class="contact-card">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </div>
+        <h3>Still need help?</h3>
+        <p>Email us directly and we'll get back to you as quickly as possible.</p>
+        <a href="mailto:info@knowleapstrategies.com" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          info@knowleapstrategies.com
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="adjustacus-logo.jpg" alt="Adjustacus" onerror="this.style.display='none'">
+        <span class="footer-brand-name">Adjustacus</span>
+      </div>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/support.html">Support</a>
+      </div>
+      <div class="footer-copy">&copy; 2026 Adjustacus. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    // FAQ accordion
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        // Close all
+        document.querySelectorAll('.faq-item.open').forEach(el => {
+          el.classList.remove('open');
+          el.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        });
+        // Toggle clicked
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.07 });
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
