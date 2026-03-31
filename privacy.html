@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Adjustacus</title>
+  <meta name="description" content="Adjustacus Privacy Policy — how we collect, use, and protect your information.">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <style>
+    :root {
+      --navy-deep:    #080E1A;
+      --navy:         #0B1220;
+      --navy-mid:     #0F1A2E;
+      --navy-surface: #152039;
+      --navy-card:    #1A2845;
+      --navy-border:  #243558;
+      --blue:         #0EA5E9;
+      --blue-dim:     #0284C7;
+      --blue-glow:    rgba(14,165,233,0.12);
+      --gold:         #F59E0B;
+      --text-primary: #EFF6FF;
+      --text-mid:     #B8CEEB;
+      --text-muted:   #6A85A8;
+      --text-dim:     #3D566E;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      background: var(--navy-deep);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(14,165,233,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(14,165,233,0.035) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(8,14,26,0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--navy-border);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .nav-logo img { height: 38px; width: auto; }
+    .nav-logo-text {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--text-primary);
+    }
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--blue); }
+    .nav-back svg { width: 15px; height: 15px; }
+
+    /* PAGE HEADER */
+    .page-header {
+      position: relative;
+      z-index: 1;
+      padding: 9rem 2rem 4rem;
+      text-align: center;
+      overflow: hidden;
+    }
+    .page-header-orb {
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse, rgba(14,165,233,0.1) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .page-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 1.2rem;
+    }
+    .page-eyebrow::before, .page-eyebrow::after {
+      content: '';
+      display: block;
+      width: 22px; height: 1px;
+      background: var(--blue);
+    }
+    .page-header h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .page-header h1 em { font-style: normal; color: var(--blue); }
+    .page-header p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* CONTENT */
+    .content {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+    }
+
+    /* POLICY SECTIONS */
+    .policy-section {
+      margin-bottom: 3rem;
+    }
+    .policy-section h2 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--navy-border);
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .policy-section h2 .section-num {
+      flex-shrink: 0;
+      width: 26px; height: 26px;
+      background: var(--blue-glow);
+      border: 1px solid rgba(14,165,233,0.2);
+      border-radius: 0.35rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: 0;
+    }
+    .policy-section p {
+      font-size: 0.925rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .policy-section p:last-child { margin-bottom: 0; }
+    .policy-section ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      margin: 0.75rem 0 1rem;
+    }
+    .policy-section ul li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.925rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+    .policy-section ul li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 14px; height: 14px;
+      margin-top: 3px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M2 7.5l3 3L12 3.5' stroke='%230EA5E9' stroke-width='1.75' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    .policy-section a {
+      color: var(--blue);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* EFFECTIVE DATE BADGE */
+    .effective-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--navy-surface);
+      border: 1px solid var(--navy-border);
+      border-radius: 0.5rem;
+      padding: 0.6rem 1rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+    }
+    .effective-badge span { color: var(--text-mid); font-weight: 600; }
+
+    /* CONTACT CARD */
+    .contact-card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 1rem;
+      padding: 2rem 1.75rem;
+      margin-top: 3rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--blue), transparent);
+      opacity: 0.5;
+    }
+    .contact-icon {
+      flex-shrink: 0;
+      width: 44px; height: 44px;
+      background: var(--blue-glow);
+      border: 1px solid rgba(14,165,233,0.2);
+      border-radius: 0.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .contact-icon svg { width: 20px; height: 20px; stroke: var(--blue); }
+    .contact-body h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.35rem;
+    }
+    .contact-body p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .contact-body a {
+      color: var(--blue);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* DIVIDER */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--navy-border);
+      margin: 0 0 3rem;
+    }
+
+    /* FOOTER */
+    footer {
+      position: relative; z-index: 1;
+      background: var(--navy-deep);
+      border-top: 1px solid var(--navy-border);
+      padding: 2rem;
+    }
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .footer-brand img { height: 26px; width: auto; opacity: 0.65; }
+    .footer-brand-name {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .footer-links a {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text-muted); }
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    /* REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-logo-text { display: none; }
+      .page-header { padding: 7rem 1.25rem 3rem; }
+      .content { padding: 0 1.25rem 4rem; }
+      .contact-card { flex-direction: column; gap: 1rem; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <img src="adjustacus-logo.jpg" alt="Adjustacus" onerror="this.style.display='none'">
+      <span class="nav-logo-text">Adjustacus</span>
+    </a>
+    <a href="/" class="nav-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 18-6-6 6-6"/>
+      </svg>
+      Back to Home
+    </a>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-header-orb"></div>
+    <div class="page-eyebrow">Legal</div>
+    <h1><em>Privacy</em> Policy</h1>
+    <p>How Adjustacus collects, uses, and protects your information.</p>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <div class="effective-badge reveal">
+      Effective date: <span>March 31, 2026</span>
+    </div>
+
+    <div class="policy-section reveal">
+      <h2><span class="section-num">1</span> Overview</h2>
+      <p>Adjustacus ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains what information we collect when you use the Adjustacus mobile application, how we use it, and the choices you have regarding your data.</p>
+      <p>By using Adjustacus, you agree to the practices described in this policy. If you do not agree, please discontinue use of the app.</p>
+    </div>
+
+    <hr class="divider">
+
+    <div class="policy-section reveal">
+      <h2><span class="section-num">2</span> Information We Collect</h2>
+      <p>We collect only the minimum information necessary to provide the app's functionality.</p>
+      <p><strong style="color:var(--text-mid)">Information you provide directly:</strong></p>
+      <ul>
+        <li>Email address, if you sign up for early access or create an account</li>
+        <li>Photos you capture or upload within the app for property documentation</li>
+        <li>Edits, notes, or custom values you enter into a report</li>
+      </ul>
+      <p><strong style="color:var(--text-mid)">Information collected automatically:</strong></p>
+      <ul>
+        <li>Device type, operating system version, and app version</li>
+        <li>Crash logs and error reports used to diagnose technical issues</li>
+        <li>Basic usage data such as features accessed and session duration</li>
+      </ul>
+      <p>We do not collect your name, physical address, or payment information through the app.</p>
+    </div>
+
+    <hr class="divider">
+
+    <div class="policy-section reveal">
+      <h2><span class="section-num">3</span> How We Use Your Information</h2>
+      <p>We use the information we collect for the following purposes:</p>
+      <ul>
+        <li>To process photos through our AI engine and generate your property inventory</li>
+        <li>To calculate and display replacement cost estimates for identified items</li>
+        <li>To generate and deliver PDF and CSV report exports</li>
+        <li>To send launch notifications or product updates if you opted in</li>
+        <li>To diagnose bugs, improve performance, and develop new features</li>
+        <li>To comply with applicable legal obligations</li>
+      </ul>
+      <p>We do not use your data for advertising, behavioral profiling, or any purpose unrelated to operating and improving Adjustacus.</p>
+    </div>
+
+    <hr class="divider">
+
+    <div class="policy-section reveal">
+      <h2><span class="section-num">4</span> Photos and Image Data</h2>
+      <p>When you take or upload a photo in Adjustacus, the image is transmitted over an encrypted connection to our AI processing servers. The image is analyzed to identify items and estimate replacement values, then the result is returned to your device.</p>
+      <p>We do not store your photos on our servers after processing is complete. Images are not used to train AI models, shared with third parties, or retained beyond the duration of a single scan session.</p>
+      <p>Your original photos remain on your device and are not modified or deleted by the app.</p>
+    </div>
+
+    <hr class="divider">
+
+    <div class="policy-section reveal">
+      <h2><span class="section-num">5</span> Data Sharing</h2>
+      <p>We do not sell, rent, or trade your personal information. We may share data in the following limited circumstances:</p>
+      <ul>
+        <li><strong style="color:var(--text-mid)">Service providers:</strong> Third-party vendors who help us operate the app (such as cloud infrastructure and crash reporting), under strict confidentiality agreements</li>
+        <li><strong style="color:var(--text-mid)">Legal requirements:</strong> If required by law, court order, or to protect the rights and safety of our users or the public</li>
+        <li><strong style="color:var(--text-mid)">Business transfers:</strong> In the event of a merger, acquisition, or sale of assets, user data may be transferred as part of that transaction</li>
+      </ul>
+      <p>Any third-party service providers we engage are prohibited from using your information for their own purposes.</p>
+    </div>
+
+    <hr class="divider">
+
+    <div class="policy-section reveal">
+      <h2><span class="section-num">6</span> Data Retention</h2>
+      <p>Reports and inventories you create are stored locally on your device. We do not maintain copies of your completed reports on our servers.</p>
+      <p>If you provided your email address for early access notifications, we retain that address until you unsubscribe or request deletion. Account data, if applicable, is retained for the duration of your account and deleted within 30 days of a verified deletion request.</p>
+    </div>
+
+    <hr class="divider">
+
+    <div class="policy-section reveal">
+      <h2><span class="section-num">7</span> Your Rights and Choices</h2>
+      <p>Depending on your location, you may have the following rights regarding your personal data:</p>
+      <ul>
+        <li>Access the personal information we hold about you</li>
+        <li>Request correction of inaccurate information</li>
+        <li>Request deletion of your data</li>
+        <li>Opt out of any marketing or notification emails</li>
+        <li>Lodge a complaint with your local data protection authority</li>
+      </ul>
+      <p>To exercise any of these rights, contact us at <a href="mailto:info@knowleapstrategies.com">info@knowleapstrategies.com</a>. We will respond within 30 days.</p>
+    </div>
+
+    <hr class="divider">
+
+    <div class="policy-section reveal">
+      <h2><span class="section-num">8</span> Children's Privacy</h2>
+      <p>Adjustacus is not directed to children under the age of 13. We do not knowingly collect personal information from children. If you believe a child has provided us with personal information, please contact us and we will promptly delete it.</p>
+    </div>
+
+    <hr class="divider">
+
+    <div class="policy-section reveal">
+      <h2><span class="section-num">9</span> Security</h2>
+      <p>We use industry-standard encryption (TLS) for all data transmitted between the app and our servers. Access to user data is restricted to authorized personnel only. While no system is completely secure, we take reasonable and appropriate measures to protect your information against unauthorized access, disclosure, or loss.</p>
+    </div>
+
+    <hr class="divider">
+
+    <div class="policy-section reveal">
+      <h2><span class="section-num">10</span> Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. When we do, we will revise the effective date at the top of this page. If changes are material, we will notify you through the app or by email. Continued use of Adjustacus after an update constitutes acceptance of the revised policy.</p>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="contact-card reveal reveal-delay-1">
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="22,6 12,13 2,6"/>
+        </svg>
+      </div>
+      <div class="contact-body">
+        <h3>Privacy Questions</h3>
+        <p>For any questions about this policy or your personal data, contact us at <a href="mailto:info@knowleapstrategies.com">info@knowleapstrategies.com</a>. We typically respond within 1–2 business days.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="adjustacus-logo.jpg" alt="Adjustacus" onerror="this.style.display='none'">
+        <span class="footer-brand-name">Adjustacus</span>
+      </div>
+      <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/support.html">Support</a>
+        <a href="/privacy.html">Privacy Policy</a>
+      </div>
+      <div class="footer-copy">&copy; 2026 Adjustacus. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.07 });
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
