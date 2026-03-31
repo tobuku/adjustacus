@@ -274,39 +274,74 @@
       background: rgba(14,165,233,0.04);
       border: 1px solid transparent;
       border-radius: 7px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 3px;
+      position: relative;
+      overflow: hidden;
       opacity: 0;
       transform: scale(0.88);
-      transition: background 0.3s, border-color 0.3s, opacity 0.4s, transform 0.4s;
+      transition: border-color 0.3s, opacity 0.4s, transform 0.4s;
     }
     .room-item.visible {
       opacity: 1;
       transform: scale(1);
     }
     .room-item.tagged {
-      background: rgba(14,165,233,0.14);
-      border-color: rgba(14,165,233,0.38);
+      border-color: rgba(14,165,233,0.55);
     }
+    .room-item-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      border-radius: 6px;
+    }
+    .room-item.tagged .room-item-photo {
+      opacity: 1;
+    }
+    /* dark gradient so label stays readable over photo */
+    .room-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 30%, rgba(5,10,20,0.82) 100%);
+      border-radius: 6px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .room-item.tagged::after { opacity: 1; }
     .room-item-label {
-      font-size: 0.48rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      color: var(--blue);
+      position: absolute;
+      bottom: 4px;
+      left: 0; right: 0;
+      text-align: center;
+      font-size: 0.44rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: #fff;
       text-transform: uppercase;
       opacity: 0;
-      transition: opacity 0.3s 0.2s;
+      transition: opacity 0.3s 0.25s;
+      z-index: 2;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
     }
     .room-item.tagged .room-item-label { opacity: 1; }
-    .room-item-icon {
-      width: 18px; height: 18px;
-      opacity: 0.25;
-      transition: opacity 0.3s;
+    /* blue corner tag when scanned */
+    .room-item-tag {
+      position: absolute;
+      top: 4px; right: 4px;
+      width: 8px; height: 8px;
+      border-top: 2px solid var(--blue);
+      border-right: 2px solid var(--blue);
+      border-radius: 0 2px 0 0;
+      opacity: 0;
+      transition: opacity 0.3s 0.15s;
+      z-index: 2;
     }
-    .room-item.tagged .room-item-icon { opacity: 0.7; }
+    .room-item.tagged .room-item-tag { opacity: 1; }
     .scan-line {
       position: absolute;
       left: 0; right: 0; height: 2px;
@@ -1104,18 +1139,18 @@
 
     // Phone mockup animation
     const roomItems = [
-      { label: 'Sofa',      val: 1200 },
-      { label: 'TV',        val: 850  },
-      { label: 'Table',     val: 440  },
-      { label: 'Chair',     val: 320  },
-      { label: 'Lamp',      val: 95   },
-      { label: 'Cabinet',   val: 680  },
-      { label: 'Rug',       val: 375  },
-      { label: 'Blinds',    val: 215  },
-      { label: 'Art',       val: 150  },
-      { label: 'Clock',     val: 75   },
-      { label: 'Plant',     val: 45   },
-      { label: 'Shelf',     val: 290  },
+      { label: 'Sofa',    val: 1200, img: 'items/sofa.jpg'    },
+      { label: 'TV',      val: 850,  img: 'items/tv.jpg'      },
+      { label: 'Table',   val: 440,  img: 'items/table.jpg'   },
+      { label: 'Chair',   val: 320,  img: 'items/chair.jpg'   },
+      { label: 'Lamp',    val: 95,   img: 'items/lamp.jpg'    },
+      { label: 'Cabinet', val: 680,  img: 'items/cabinet.jpg' },
+      { label: 'Rug',     val: 375,  img: 'items/rug.jpg'     },
+      { label: 'Blinds',  val: 215,  img: 'items/blinds.jpg'  },
+      { label: 'Art',     val: 150,  img: 'items/art.jpg'     },
+      { label: 'Clock',   val: 75,   img: 'items/clock.jpg'   },
+      { label: 'Plant',   val: 45,   img: 'items/plant.jpg'   },
+      { label: 'Shelf',   val: 290,  img: 'items/shelf.jpg'   },
     ];
 
     const phoneGrid  = document.getElementById('phoneGrid');
@@ -1127,11 +1162,8 @@
       const cell = document.createElement('div');
       cell.className = 'room-item';
       cell.innerHTML = `
-        <svg class="room-item-icon" viewBox="0 0 20 20" fill="none" stroke="rgba(14,165,233,0.6)" stroke-width="1.5">
-          <rect x="3" y="3" width="14" height="14" rx="2.5"/>
-          <line x1="7" y1="10" x2="13" y2="10"/>
-          <line x1="10" y1="7" x2="10" y2="13"/>
-        </svg>
+        <img class="room-item-photo" src="${item.img}" alt="${item.label}" loading="lazy">
+        <div class="room-item-tag"></div>
         <span class="room-item-label">${item.label}</span>
       `;
       phoneGrid.appendChild(cell);
