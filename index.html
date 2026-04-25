@@ -860,7 +860,7 @@
     </div>
     <div class="nav-badge">
       <span class="nav-badge-dot"></span>
-      Coming to the App Store
+      Now on the App Store
     </div>
   </nav>
 
@@ -877,19 +877,8 @@
           Adjustacus turns a single photo into a complete property inventory — every item identified, every replacement cost estimated, and a professional report ready to export or email in seconds.
         </p>
         <div class="hero-cta">
-          <a href="#" class="btn-primary">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 18.5a6.5 6.5 0 1 0 0-13 6.5 6.5 0 0 0 0 13Z"/>
-              <path d="M12 22v-3.5"/>
-              <path d="M12 2v3.5"/>
-              <path d="m4.22 4.22 2.47 2.47"/>
-              <path d="m17.31 17.31 2.47 2.47"/>
-              <path d="M2 12h3.5"/>
-              <path d="M18.5 12H22"/>
-              <path d="m4.22 19.78 2.47-2.47"/>
-              <path d="m17.31 6.69 2.47-2.47"/>
-            </svg>
-            Download on App Store
+          <a href="https://apps.apple.com/us/app/adjustacus/id6761407499?itscg=30200&itsct=apps_box_badge&mttnsubad=6761407499" style="display: inline-block;">
+            <img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us?releaseDate=1776038400" alt="Download on the App Store" style="width: 246px; height: 82px; vertical-align: middle; object-fit: contain;" />
           </a>
           <a href="#how" class="btn-secondary">
             See How It Works
@@ -1098,24 +1087,17 @@
     </div>
   </section>
 
-  <!-- CTA / EMAIL CAPTURE -->
+  <!-- CTA / DOWNLOAD -->
   <section class="cta-section" id="notify">
     <div class="cta-inner">
-      <div class="section-label reveal">Early Access</div>
-      <h2 class="reveal">Be first to know<br>when we launch.</h2>
-      <p class="section-sub reveal">Adjustacus is coming to the App Store. Enter your email and we'll notify you the moment it's available.</p>
-      <form class="email-form reveal" onsubmit="handleSubmit(event)" novalidate>
-        <input
-          type="email"
-          class="email-input"
-          placeholder="your@email.com"
-          required
-          autocomplete="email"
-          id="emailInput"
-        >
-        <button type="submit" class="btn-primary">Notify Me</button>
-      </form>
-      <p class="form-note" id="formNote">Your information is never shared or sold.</p>
+      <div class="section-label reveal">Available Now</div>
+      <h2 class="reveal">Download Adjustacus<br><em>on the App Store.</em></h2>
+      <p class="section-sub reveal">Start documenting your property in minutes. Free to download — available now on iPhone.</p>
+      <div class="reveal" style="display:flex;justify-content:center;">
+        <a href="https://apps.apple.com/us/app/adjustacus/id6761407499?itscg=30200&itsct=apps_box_badge&mttnsubad=6761407499" style="display: inline-block;">
+          <img src="https://toolbox.marketingtools.apple.com/api/v2/badges/download-on-the-app-store/black/en-us?releaseDate=1776038400" alt="Download on the App Store" style="width: 246px; height: 82px; vertical-align: middle; object-fit: contain;" />
+        </a>
+      </div>
     </div>
   </section>
 
@@ -1210,16 +1192,6 @@
     }, { threshold: 0.08 });
     revealEls.forEach(el => revealObserver.observe(el));
 
-    // Email form
-    function handleSubmit(e) {
-      e.preventDefault();
-      const note  = document.getElementById('formNote');
-      const input = document.getElementById('emailInput');
-      note.textContent = "You're on the list. We'll be in touch.";
-      note.style.color = 'var(--blue)';
-      input.value = '';
-      input.blur();
-    }
   </script>
 
 </body>
